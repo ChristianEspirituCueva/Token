@@ -1,4 +1,4 @@
-package model.entity;
+package pe.edu.upc.model.entity;
 
 import java.sql.Date;
 
