@@ -1,20 +1,26 @@
+package pe.edu.upc.model.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "admin")
-@Data
-@Getter
-@Setter
 public class Admin{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name="idUser")
+    private int idUser;
+    
+    @Column(name = "Cargo")
+    private int cargo;
 
-    @NotNull
-    @NotBlank
-    private int Cargo;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    //private Long id;
+    @OneToOne
+    @MapsId
     private User user;
+    
 }
 
