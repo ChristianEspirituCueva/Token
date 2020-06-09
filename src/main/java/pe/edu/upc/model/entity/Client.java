@@ -1,9 +1,12 @@
 package pe.edu.upc.model.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -13,7 +16,7 @@ public class Client {
 
 	@Id
 	@Column(name = "IdUser")
-	private Long idUser;
+	private Integer idUser;
 		
 	@Column(name="Document",nullable = false)
 	private String document;
@@ -26,21 +29,16 @@ public class Client {
 
 	@OneToOne
 	@MapsId
-    private User user;
-	 
-	public Client(Long idUser, String document, String ruc, String company) {
-		super();
-		this.idUser = idUser;
-		this.document = document;
-		this.ruc = ruc;
-		this.company = company;
-	}
+	private User user;
 	
-	public Long getIdUser() {
+	@OneToMany(mappedBy = "idclient")
+	private List<Bond> bonos;	
+	
+	public Integer getId() {
 		return idUser;
 	}
 
-	public void setIdUser(Long idUser) {
+	public void setId(Integer idUser) {
 		this.idUser = idUser;
 	}
 
@@ -66,6 +64,14 @@ public class Client {
 
 	public void setCompany(String company) {
 		this.company = company;
+	}
+
+	public List<Bond> getbonds(){
+		return bonos;
+	}
+
+	public void setbonds(List<Bond> bonos){
+		this.bonos=bonos;
 	}
 	 
 }

@@ -49,9 +49,7 @@ public class Cupon {
 	
 	@ManyToOne
 	@JoinColumn(name = "idBond")
-	private Bond idBond;
-	
-	
+	private Bond idBond;	
 
 	public Cupon() {
 		super();
@@ -74,11 +72,11 @@ public class Cupon {
 		this.idBond = bond;
 	}
 
-	public int getIdCupon() {
+	public int getId() {
 		return idCupon;
 	}
 
-	public void setIdCupon(int idCupon) {
+	public void setId(int idCupon) {
 		this.idCupon = idCupon;
 	}
 

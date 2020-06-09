@@ -1,14 +1,16 @@
 package pe.edu.upc.model.entity;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-//import javax.persistence.JoinColumn;
-//import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,9 +20,9 @@ public class Bond{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idBond;
 
-    //@ManyToOne
-    //@JoinColumn(name="id")
-    //private User idCreator;
+    @ManyToOne
+    @JoinColumn(name="idUser")
+    private Admin idCreator;
 
     @Column(name="VNominal",nullable = false)
     private float vNominal;
@@ -71,12 +73,15 @@ public class Bond{
     @Column(name="Estado",nullable = false)
     private boolean estado;
 
-    //@ManyToOne
-    //@JoinColumn(name="id")
-    //private Client idcliente;
+    @ManyToOne
+    @JoinColumn(name="idUser")
+	private Client idclient;	
 
     @Column(name="TceaEscudo",nullable = false,length = 100)
-    private String typeMoney;
+	private String typeMoney;
+	
+	@OneToMany(mappedBy = "idBond")
+	private List<Cupon> cupons;
 
     public Integer getId() {
 		return idBond;
@@ -222,4 +227,27 @@ public class Bond{
 		this.typeMoney = typeMoney;
 	}
 
+	public Admin getIdCreator(){
+		return idCreator;
+	}
+
+	public void setIdCreator(Admin admin){
+		idCreator=admin;
+	}
+
+	public Client getIdClient(){
+		return idclient;
+	}
+
+	public void setIdClient(Client client){
+		idclient=client;
+	}
+
+	public List<Cupon> getCupons(){
+		return cupons;
+	}
+
+	public void setCupons(List<Cupon> cupons){
+		this.cupons=cupons;
+	}
 }
