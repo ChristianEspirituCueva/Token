@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import pe.edu.upc.exception.ModelNotFoundException;
-import pe.edu.upc.model.entity.User;
+import pe.edu.upc.model.entity.UserApp;
 import pe.edu.upc.service.UserService;
 
 @RestController
@@ -33,39 +33,39 @@ public class UserController {
 
     //@ApiOperation("")
     @GetMapping
-    public ResponseEntity<List<User>> listar(){
-        List<User> users= new ArrayList<>();
+    public ResponseEntity<List<UserApp>> listar(){
+        List<UserApp> users= new ArrayList<>();
         users=userService.listar();
-        return new ResponseEntity<List<User>>(users,HttpStatus.OK);
+        return new ResponseEntity<List<UserApp>>(users,HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> listarId(@PathVariable("id") Integer id){
-        Optional<User> user =userService.listId(id);
+    public ResponseEntity<UserApp> listarId(@PathVariable("id") Integer id){
+        Optional<UserApp> user =userService.listId(id);
         if(!user.isPresent()){
         throw new ModelNotFoundException("ID:"+ id);
         }
 
-        return new ResponseEntity<User>(user.get(),HttpStatus.OK);
+        return new ResponseEntity<UserApp>(user.get(),HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<User> registrar(@Valid @RequestBody User user){
-        User userNew= new User();
+    public ResponseEntity<UserApp> registrar(@Valid @RequestBody UserApp user){
+        UserApp userNew= new UserApp();
         userNew = userService.registrar(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userNew.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
 
     @PutMapping
-    public ResponseEntity<User> actualizar(@Valid @RequestBody User user){
+    public ResponseEntity<UserApp> actualizar(@Valid @RequestBody UserApp user){
         userService.modificar(user);
-        return new ResponseEntity<User>(HttpStatus.OK);
+        return new ResponseEntity<UserApp>(HttpStatus.OK);
     }
 
     @DeleteMapping(value="/{id}")
     public void eliminar(@PathVariable Integer id){
-        Optional<User> user = userService.listId(id);
+        Optional<UserApp> user = userService.listId(id);
         if(!user.isPresent()){
             throw new ModelNotFoundException("ID: "+id);
         } else {

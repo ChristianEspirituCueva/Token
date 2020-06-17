@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pe.edu.upc.model.entity.User;
+import pe.edu.upc.model.entity.UserApp;
 import pe.edu.upc.model.repository.UserRepository;
 import pe.edu.upc.service.UserService;
 
@@ -16,12 +16,12 @@ public class UserServiceImpl implements UserService{
     UserRepository userRepo;
 
     @Override
-    public User registrar(User t){
+    public UserApp registrar(UserApp t){
         return userRepo.save(t);
     }
 
     @Override
-    public User modificar(User t){
+    public UserApp modificar(UserApp t){
         return userRepo.save(t);
     }
 
@@ -31,12 +31,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Optional<User> listId(Integer id){
+    public Optional<UserApp> listId(Integer id){
         return userRepo.findById(id);
     }
 
     @Override
-    public List<User> listar(){
+    public List<UserApp> listar(){
         return userRepo.findAll();
     }
 }

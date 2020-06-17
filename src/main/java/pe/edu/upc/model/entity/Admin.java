@@ -14,8 +14,8 @@ import javax.persistence.Table;
 @Table(name = "admin")
 public class Admin{
     @Id
-    @Column(name="idUser")
-    private Integer idUser;
+    @Column(name="idAdmin")
+    private Integer idAdmin;
     
     @Column(name = "Cargo",nullable = false)
     private String cargo;
@@ -23,17 +23,17 @@ public class Admin{
     //private Long id;
     @OneToOne
     @MapsId
-    private User user;
+    private UserApp user;
 
     @OneToMany(mappedBy = "idCreator")
     private List<Bond> bonos;
 
     public Integer getId(){
-        return idUser;
+        return idAdmin;
     }
 
     public void setid(Integer id){
-        idUser=id;
+        idAdmin=id;
     }
 
     public String getCargo(){

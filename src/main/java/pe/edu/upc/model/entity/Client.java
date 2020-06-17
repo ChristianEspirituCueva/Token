@@ -15,8 +15,8 @@ import javax.persistence.Table;
 public class Client {
 
 	@Id
-	@Column(name = "IdUser")
-	private Integer idUser;
+	@Column(name = "IdClient")
+	private Integer idClient;
 		
 	@Column(name="Document",nullable = false)
 	private String document;
@@ -29,17 +29,17 @@ public class Client {
 
 	@OneToOne
 	@MapsId
-	private User user;
+	private UserApp user;
 	
 	@OneToMany(mappedBy = "idclient")
 	private List<Bond> bonos;	
 	
 	public Integer getId() {
-		return idUser;
+		return idClient;
 	}
 
-	public void setId(Integer idUser) {
-		this.idUser = idUser;
+	public void setId(Integer idClient) {
+		this.idClient = idClient;
 	}
 
 	public String getDocument() {
