@@ -23,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pe.edu.upc.exception.ModelNotFoundException;
 import pe.edu.upc.model.entity.Bond;
 import pe.edu.upc.service.BondService;
+import pe.edu.upc.service.CuponService;
 
 @RestController
 @RequestMapping("/bono")
@@ -30,6 +31,9 @@ public class BondController {
     
     @Autowired
     private BondService bondService;
+
+    @Autowired
+    private CuponService cuponservice;
 
     //@ApiOperation("")
     @GetMapping
@@ -53,6 +57,8 @@ public class BondController {
     public ResponseEntity<Bond> registrar(@Valid @RequestBody Bond bono){
         Bond bonoNew= new Bond();
         bonoNew = bondService.registrar(bono);
+        bono = cuponservice.generateCupons(bono);
+        bondService.results(bono.getId(),bono.getTcea(),bono.getTceaEscudo(),bono.getTreaBonista());
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(bonoNew.getId()).toUri();
         return ResponseEntity.created(location).build();
     }

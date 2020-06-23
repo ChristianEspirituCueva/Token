@@ -33,16 +33,16 @@ public class Cupon {
 	private float escudo;
 	
 	@Column(name = "prima")
-	private int prima;
+	private float prima;
 	
 	@Column(name = "vEmision")
-	private float vEmision;
+	private double vEmision;
 	
 	@Column(name = "vEmisionc_escudo")
-	private float vEmisionc_escudo;
+	private double vEmisionc_escudo;
 	
 	@Column(name = "vBonista")
-	private float vBonista;
+	private double vBonista;
 	
 	@Column(name = "fechaPago")
 	private Date fechaPago;
@@ -56,19 +56,17 @@ public class Cupon {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cupon(int idCupon, float vBono, float valor, float sumCECF, float escudo, int prima, float vEmision,
-			float vEmisionc_escudo, float vBonista, Date fechaPago, Bond bond) {
+	public Cupon(float vBono, float valor, float escudo, float prima, double vEmision,
+	double vEmisionc_escudo, double vBonista, Bond bond) {
 		super();
-		this.idCupon = idCupon;
 		this.vBono = vBono;
 		this.valor = valor;
-		this.sumCECF = sumCECF;
+		//this.sumCECF = sumCECF;
 		this.escudo = escudo;
 		this.prima = prima;
 		this.vEmision = vEmision;
 		this.vEmisionc_escudo = vEmisionc_escudo;
-		this.vBonista = vBonista;
-		this.fechaPago = fechaPago;
+		this.vBonista = vBonista;		
 		this.idBond = bond;
 	}
 
@@ -112,35 +110,35 @@ public class Cupon {
 		this.escudo = escudo;
 	}
 
-	public int getPrima() {
+	public float getPrima() {
 		return prima;
 	}
 
-	public void setPrima(int prima) {
+	public void setPrima(float prima) {
 		this.prima = prima;
 	}
 
-	public float getvEmision() {
+	public double getvEmision() {
 		return vEmision;
 	}
 
-	public void setvEmision(float vEmision) {
+	public void setvEmision(double vEmision) {
 		this.vEmision = vEmision;
 	}
 
-	public float getvEmisionc_escudo() {
+	public double getvEmisionc_escudo() {
 		return vEmisionc_escudo;
 	}
 
-	public void setvEmisionc_escudo(float vEmisionc_escudo) {
+	public void setvEmisionc_escudo(double vEmisionc_escudo) {
 		this.vEmisionc_escudo = vEmisionc_escudo;
 	}
 
-	public float getvBonista() {
+	public double getvBonista() {
 		return vBonista;
 	}
 
-	public void setvBonista(float vBonista) {
+	public void setvBonista(double vBonista) {
 		this.vBonista = vBonista;
 	}
 

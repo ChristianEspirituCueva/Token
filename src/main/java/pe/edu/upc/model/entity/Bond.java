@@ -30,7 +30,8 @@ public class Bond{
     @Column(name="VComercial",nullable = false)
     private float vComercial;
 
-    //@Min(0)
+	//@Min(0)
+	//N de años, asumimos que el numero de días por año es 360
     @Column(name="Time",nullable = false)
     private Integer time;
 
@@ -62,13 +63,13 @@ public class Bond{
     private Date fecLiqu;
 
     @Column(name="TceaEscudo",nullable = false)
-    private float tceaEscudo;
+    private double tceaEscudo;
 
     @Column(name="Tcea",nullable = false)
-    private float tcea;
+    private double tcea;
 
     @Column(name="TreaBonista",nullable = false)
-    private float treaBonista;
+    private double treaBonista;
 
     @Column(name="Estado",nullable = false)
     private boolean estado;
@@ -187,27 +188,27 @@ public class Bond{
 		this.fecLiqu = fecLiqu;
 	}
 
-	public float getTceaEscudo() {
+	public double getTceaEscudo() {
 		return tceaEscudo;
 	}
 
-	public void setTceaEscudo(float tceaEscudo) {
+	public void setTceaEscudo(double tceaEscudo) {
 		this.tceaEscudo = tceaEscudo;
 	}
 
-	public float getTcea() {
+	public double getTcea() {
 		return tcea;
 	}
 
-	public void setTcea(float tcea) {
+	public void setTcea(double tcea) {
 		this.tcea = tcea;
 	}
 
-	public float getTreaBonista() {
+	public double getTreaBonista() {
 		return treaBonista;
 	}
 
-	public void setTreaBonista(float treaBonista) {
+	public void setTreaBonista(double treaBonista) {
 		this.treaBonista = treaBonista;
 	}
 
