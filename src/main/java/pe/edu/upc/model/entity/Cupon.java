@@ -1,24 +1,38 @@
 package pe.edu.upc.model.entity;
 
+import java.io.Serializable;
 //import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "Cupon")
 public class Cupon {
 
-    @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idCupon;
+	@EmbeddedId
+	private CuponId id;
+
+	@MapsId("idBond")
+	@JoinColumn(name="idBond_fk", referencedColumnName = "idBond")
+	@ManyToOne
+	private Bond idBond;
+
+    //@Id
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//private int idCupon;
+
 	
 	@Column(name = "vBono")
 	private float vBono;
@@ -36,20 +50,16 @@ public class Cupon {
 	private float prima;
 	
 	@Column(name = "vEmision")
-	private double vEmision;
+	private double vEmision;//flujo del emisor
 	
 	@Column(name = "vEmisionc_escudo")
-	private double vEmisionc_escudo;
+	private double vEmisionc_escudo;//flujo del emisor con escudo
 	
 	@Column(name = "vBonista")
-	private double vBonista;
+	private double vBonista;//flujo del bonista
 	
 	@Column(name = "fechaPago")
-	private Date fechaPago;
-	
-	@ManyToOne
-	@JoinColumn(name = "idBond")
-	private Bond idBond;	
+	private Date fechaPago;	
 
 	public Cupon() {
 		super();
@@ -70,12 +80,12 @@ public class Cupon {
 		this.idBond = bond;
 	}
 
-	public int getId() {
-		return idCupon;
+	public CuponId getId() {
+		return id;
 	}
 
-	public void setId(int idCupon) {
-		this.idCupon = idCupon;
+	public void setId(CuponId idCupon) {
+		this.id = idCupon;
 	}
 
 	public float getvBono() {

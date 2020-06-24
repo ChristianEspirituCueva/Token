@@ -16,8 +16,8 @@ public class BondServiceImpl implements BondService{
     BondRepository bondRepo;
 
     @Override
-    public void results(Integer id,double tcea,double tcea_escudo,double trea_bonista){
-        bondRepo.updateBondResults(id,tcea, tcea_escudo, trea_bonista);
+    public void results(Integer id,double tcea,double tcea_escudo,double trea_bonista,double cPrice,double vna){
+        bondRepo.updateBondResults(id,tcea, tcea_escudo, trea_bonista,cPrice,vna);
     }
 
     @Override

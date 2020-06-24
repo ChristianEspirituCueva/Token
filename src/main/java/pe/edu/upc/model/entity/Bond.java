@@ -28,12 +28,34 @@ public class Bond{
     private float vNominal;
 
     @Column(name="VComercial",nullable = false)
-    private float vComercial;
+	private float vComercial;
 
 	//@Min(0)
 	//N de años, asumimos que el numero de días por año es 360
-    @Column(name="Time",nullable = false)
-    private Integer time;
+    @Column(name="nYears",nullable = false)
+    private Integer nYears; //n anios
+	
+	//dias por periodo
+	@Column(name="dxp",nullable = false)
+	private int dxp;
+
+	//días por año
+	@Column(name="dxa",nullable=false)
+	private int dxa;
+
+	//imp.Renta
+	@Column(name="impRenta",nullable=false)
+	private float impRenta;
+
+	//pcolocacion
+	@Column(name="pCol",nullable=true)
+	private float pCol;
+
+	//inflación esperada: preguntar
+	
+	// tasa de descuento: preguntar
+	@Column(name="TDes",nullable=false)	
+	private float tDes;
 
     @Column(name="Tea",nullable = false)
     private float tea;
@@ -41,17 +63,14 @@ public class Bond{
     @Column(name="PPrima",nullable = false)
     private float pPrima;
 
-    @Column(name="PEstruc",nullable = false)
+    @Column(name="PEstruc",nullable = true)
     private float pEstruc;
 
-    @Column(name="PFlot",nullable = false)
+    @Column(name="PFlot",nullable = true)
     private float pFlot;
 
-    @Column(name="PCavali",nullable = false)
-    private float pCavali;
-
-    @Column(name="Frequency",nullable = false,length = 100)
-    private String frequency;
+    @Column(name="PCavali",nullable = true)
+    private float pCavali;    
 
     @Column(name="Method",nullable = false,length = 100)
     private String method;
@@ -62,14 +81,20 @@ public class Bond{
     @Column(name="FecLiqu",nullable = false)
     private Date fecLiqu;
 
-    @Column(name="TceaEscudo",nullable = false)
+    @Column(name="TceaEscudo",nullable = true)
     private double tceaEscudo;
 
-    @Column(name="Tcea",nullable = false)
+    @Column(name="Tcea",nullable = true)
     private double tcea;
 
-    @Column(name="TreaBonista",nullable = false)
-    private double treaBonista;
+    @Column(name="TreaBonista",nullable = true)
+	private double treaBonista;
+	
+	@Column(name="CPrice",nullable=true)
+	private double cPrice;
+
+	@Column(name="Vna",nullable=true)
+	private double vna;
 
     @Column(name="Estado",nullable = false)
     private boolean estado;
@@ -78,7 +103,7 @@ public class Bond{
     @JoinColumn(name="idClient")
 	private Client idclient;
 
-    @Column(name="TypeMoney",nullable = false,length = 100)
+    @Column(name="TypeMoney",nullable = false ,length = 100)
 	private String typeMoney;
 	
 	@OneToMany(mappedBy = "idBond")
@@ -108,12 +133,12 @@ public class Bond{
 		this.vComercial = vComercial;
 	}
 
-	public Integer getTime() {
-		return time;
+	public Integer getNYears() {
+		return nYears;
 	}
 
-	public void setTime(Integer time) {
-		this.time = time;
+	public void setNYears(Integer nYears) {
+		this.nYears = nYears;
 	}
 
 	public float getTea() {
@@ -156,12 +181,44 @@ public class Bond{
 		this.pCavali = pCavali;
 	}
 
-	public String getFrequency() {
-		return frequency;
+	public Integer getDxp() {
+		return dxp;
 	}
 
-	public void setFrequency(String frequency) {
-		this.frequency = frequency;
+	public void setDxp(int dxp) {
+		this.dxp = dxp;
+	}
+
+	public Integer getDxA(){
+		return dxa;
+	}
+
+	public void setDxA(int dxa){
+		this.dxa=dxa;
+	}
+
+	public float getImpRenta(){
+		return impRenta;
+	}
+
+	public void setImpRenta(float impRenta){
+		this.impRenta=impRenta;
+	}
+
+	public float getTDes(){
+		return tDes;
+	}
+
+	public void setTDes(float tDes){
+		this.tDes=tDes;
+	}
+
+	public float getPCol(){
+		return pCol;
+	}
+
+	public void setPCol(float pCol){
+		this.pCol=pCol;
 	}
 
 	public String getMethod() {
@@ -210,6 +267,22 @@ public class Bond{
 
 	public void setTreaBonista(double treaBonista) {
 		this.treaBonista = treaBonista;
+	}
+
+	public double getCPrice(){
+		return cPrice;
+	}
+
+	public void setCPrice(double cPrice){
+		this.cPrice=cPrice;
+	}
+
+	public double getVna(){
+		return vna;
+	}
+
+	public void setVna(double vna){
+		this.vna=vna;
 	}
 
 	public boolean isEstado() {

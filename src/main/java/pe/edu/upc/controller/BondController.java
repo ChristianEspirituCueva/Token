@@ -58,7 +58,7 @@ public class BondController {
         Bond bonoNew= new Bond();
         bonoNew = bondService.registrar(bono);
         bono = cuponservice.generateCupons(bono);
-        bondService.results(bono.getId(),bono.getTcea(),bono.getTceaEscudo(),bono.getTreaBonista());
+        bondService.results(bono.getId(),bono.getTcea(),bono.getTceaEscudo(),bono.getTreaBonista(),bono.getCPrice(),bono.getVna());
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(bonoNew.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
