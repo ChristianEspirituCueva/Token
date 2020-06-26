@@ -1,21 +1,15 @@
 package pe.edu.upc.model.entity;
 
-import java.io.Serializable;
-//import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
-
 
 @Entity
 @Table(name = "Cupon")
@@ -25,59 +19,70 @@ public class Cupon {
 	private CuponId id;
 
 	@MapsId("idBond")
-	@JoinColumn(name="idBond_fk", referencedColumnName = "idBond")
 	@ManyToOne
+	@JoinColumns({
+		@JoinColumn(name ="idBond", referencedColumnName = "idBond")
+	})	
 	private Bond idBond;
 
     //@Id
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	//private int idCupon;
 
+	@Column(name = "Pg",nullable = false)
+	private String pg;
 	
-	@Column(name = "vBono")
-	private float vBono;
+	@Column(name = "Bono",nullable = false)
+	private float bono;
 	
-	@Column(name = "valor")
-	private float valor;
+	@Column(name = "BonoInd",nullable = false)
+	private float bonoInd;
 	
-	@Column(name = "sumCECF")
-	private float sumCECF;
-	
-	@Column(name = "escudo")
-	private float escudo;
-	
-	@Column(name = "prima")
+	@Column(name = "Interes",nullable = false)
+	private float interes;
+
+	@Column(name = "Cuota",nullable = false)
+	private double cuota;
+
+	@Column(name = "Amort",nullable = false)
+	private double amort;
+
+	@Column(name = "Prima",nullable = false)
 	private float prima;
 	
-	@Column(name = "vEmision")
-	private double vEmision;//flujo del emisor
+	@Column(name = "Escudo",nullable = false)
+	private float escudo;
 	
-	@Column(name = "vEmisionc_escudo")
-	private double vEmisionc_escudo;//flujo del emisor con escudo
+	@Column(name = "FlujoE",nullable = false)
+	private double flujoE;//flujo del emisor
 	
-	@Column(name = "vBonista")
-	private double vBonista;//flujo del bonista
+	@Column(name = "FlujoEcE",nullable = false)
+	private double flujoEcE;//flujo del emifor con escudo
+
+	@Column(name = "FlujoB",nullable = false)
+	private double flujoB;//flujo del bonista
 	
-	@Column(name = "fechaPago")
+	@Column(name = "fechaPago",nullable = true)
 	private Date fechaPago;	
 
 	public Cupon() {
-		super();
-		// TODO Auto-generated constructor stub
+		super();		
 	}
 
-	public Cupon(float vBono, float valor, float escudo, float prima, double vEmision,
-	double vEmisionc_escudo, double vBonista, Bond bond) {
-		super();
-		this.vBono = vBono;
-		this.valor = valor;
-		//this.sumCECF = sumCECF;
-		this.escudo = escudo;
+	public Cupon(String pg,float bono, float bonoInd, float interes, double cuota, double amort, float prima,float escudo,
+	double flujoE, double flujoEcE, double flujoB) {		
+		this.pg= pg;
+		this.bono = bono;
+		this.bonoInd = bonoInd;
+		this.interes = interes;
+		this.cuota = escudo;
+		this.amort = prima;
 		this.prima = prima;
-		this.vEmision = vEmision;
-		this.vEmisionc_escudo = vEmisionc_escudo;
-		this.vBonista = vBonista;		
-		this.idBond = bond;
+		this.escudo = escudo;
+		this.flujoE = flujoE;		
+		this.flujoEcE = flujoEcE;
+		this.flujoB = flujoB;
+		this.fechaPago=null;
 	}
 
 	public CuponId getId() {
@@ -88,28 +93,28 @@ public class Cupon {
 		this.id = idCupon;
 	}
 
-	public float getvBono() {
-		return vBono;
+	public float getBono() {
+		return bono;
 	}
 
-	public void setvBono(float vBono) {
-		this.vBono = vBono;
+	public void setBono(float bono) {
+		this.bono = bono;
 	}
 
-	public float getValor() {
-		return valor;
+	public float getBonoInd() {
+		return bonoInd;
 	}
 
-	public void setValor(float valor) {
-		this.valor = valor;
+	public void setBonoInd(float bonoInd) {
+		this.bonoInd = bonoInd;
 	}
 
-	public float getSumCECF() {
-		return sumCECF;
+	public float getInteres() {
+		return interes;
 	}
 
-	public void setSumCECF(float sumCECF) {
-		this.sumCECF = sumCECF;
+	public void setInteres(float interes) {
+		this.interes = interes;
 	}
 
 	public float getEscudo() {
@@ -128,28 +133,45 @@ public class Cupon {
 		this.prima = prima;
 	}
 
-	public double getvEmision() {
-		return vEmision;
+	public double getCuota() {
+		return cuota;
 	}
 
-	public void setvEmision(double vEmision) {
-		this.vEmision = vEmision;
+	public void setCuota(double cuota) {
+		this.cuota = cuota;
 	}
 
-	public double getvEmisionc_escudo() {
-		return vEmisionc_escudo;
+	public double getAmort() {
+		return amort;
 	}
 
-	public void setvEmisionc_escudo(double vEmisionc_escudo) {
-		this.vEmisionc_escudo = vEmisionc_escudo;
+	public void setAmort(double amort) {
+		this.amort = amort;
 	}
 
-	public double getvBonista() {
-		return vBonista;
+
+	public double getFlujoE() {
+		return flujoE;
 	}
 
-	public void setvBonista(double vBonista) {
-		this.vBonista = vBonista;
+	public void setFlujoE(double flujoE) {
+		this.flujoE = flujoE;
+	}
+
+	public double getFlujoEcE() {
+		return flujoEcE;
+	}
+
+	public void setFlujoEcE(double vEmisionc_escudo) {
+		this.flujoEcE = vEmisionc_escudo;
+	}
+
+	public double getFlujoB() {
+		return flujoB;
+	}
+
+	public void setFlujoB(double flujoB) {
+		this.flujoB = flujoB;
 	}
 
 	public Date getFechaPago() {

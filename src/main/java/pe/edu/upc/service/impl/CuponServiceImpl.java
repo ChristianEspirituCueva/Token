@@ -43,47 +43,84 @@ public class CuponServiceImpl implements CuponService{
         float pextras= pFlot+pCavali+pEstruc+pCol;
         float bono_ind=0.0f;
         float prima=0.0f;
+        String pg="S";
 
-        float iep,bono,interes,escudo;
+        float bono,interes,escudo;
+        double cuota=0.0;
+        double amort=0.0;
         double flujoE[] = {};
         double flujoEcE[] = {};
-        double flujoB[] = {};
-        //double flujoA[] = {};
-        //double flujoAxP[] = {};
-        //double factorsConv[]= {};
+        double flujoB[] = {};        
 
         double flujofE[] = {vComercial + pextras};
         double flujofEcE[] = {flujofE[0]};
         double flujofB[] = {vComercial-(vComercial*(pFlot+pCavali))};
 
-        for(int i=0;i<np;i++){            
-
-            iep = (float)Math.pow(1+0.028,dxp/dxa)-1;
+        for(int i=0;i<np;i++){
+            
             if((i+1)==1){
                 bono=vNominal;
             }else{
                 bono=bono_ind;
             }
-            bono_ind=bono*(1+iep);
+
+            bono_ind=bono*(1+0);
             interes = -1*bono_ind*tep;
+
+            if(t.getMethod()=="Frances"){                
+                if(pg=="T"){
+                    cuota=0;
+                    amort=0;
+                } else if(pg=="P"){
+                    cuota=interes;
+                    amort=0;
+                } else if(pg=="S"){
+                    cuota=(-1)*bono_ind*tep/(1-Math.pow(1+tep,(-1)*(np-(i+1)+1)));
+                    amort=cuota-interes;
+                }                
+            } else if(t.getMethod() == "Aleman"){                
+                if(pg=="T"){
+                    cuota=0;
+                    amort=0;
+                } else if(pg=="P"){
+                    cuota=interes;
+                    amort=0;
+                } else if(pg=="S"){
+                    cuota=interes+amort;
+                    amort=(-1)*bono_ind/(np-(i+1)+1);
+                }
+            } else if(t.getMethod() == "Americano"){                
+                if(pg=="T"){
+                    cuota=0;                
+                } else if(pg=="P"){
+                    cuota=interes;                    
+                } else if(pg=="S"){
+                    cuota=interes+amort;                    
+                }
+                if(i+1==np){
+                    amort=(-1)*bono_ind;
+                }else{
+                    amort=0;
+                }
+            }
+
             if((i+1)==np){
                 prima=(-1)*pPrima*bono_ind;            
             }
             
             escudo=(-1)*interes*impRenta;
-            if((i+1)!=np){
-                flujoE=ArrayUtils.addAll(flujoE,interes); 
-            }else{
-                flujoE=ArrayUtils.addAll(flujoE,((-1)*bono_ind)+interes+prima);
-            }
+            
+            flujoE=ArrayUtils.addAll(flujoE,cuota+prima);
             flujoEcE=ArrayUtils.addAll(flujoEcE,escudo+flujoE[i]);
             flujoB=ArrayUtils.addAll(flujoB,(-1)*flujoE[i]);
             //flujoA=ArrayUtils.addAll(flujoA,flujoB[i]/((float)Math.pow(1+dp,i+1)));
             //flujoAxP=ArrayUtils.addAll(flujoAxP,flujoA[i]*(i+1)*(dxp/dxa));
             //factorsConv=ArrayUtils.addAll(factorsConv,flujoA[i]*(i+1)*(1+(i+1)));
             
-            Cupon cupon = new Cupon(bono,bono_ind,escudo,prima,flujoE[i],flujoEcE[i],flujoB[i],t);
+            Cupon cupon = new Cupon(pg,bono,bono_ind,interes,cuota,amort,prima,escudo,
+            flujoE[i],flujoEcE[i],flujoB[i]);
             cuponRepo.save(cupon);
+            cupon=null;
         }
 
         double tirE,tceaE,tirEcE,tceaEcE,tirB,treaB;

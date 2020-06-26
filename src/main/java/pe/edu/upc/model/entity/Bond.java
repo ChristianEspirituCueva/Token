@@ -21,7 +21,7 @@ public class Bond{
     private Integer idBond;
 
     @ManyToOne
-    @JoinColumn(name="idAdmin")
+    @JoinColumn(name="idAdmin",nullable = false)
     private Admin idCreator;
 
     @Column(name="VNominal",nullable = false)
@@ -100,7 +100,7 @@ public class Bond{
     private boolean estado;
 
     @ManyToOne
-    @JoinColumn(name="idClient")
+    @JoinColumn(name="idClient",nullable = true)
 	private Client idclient;
 
     @Column(name="TypeMoney",nullable = false ,length = 100)

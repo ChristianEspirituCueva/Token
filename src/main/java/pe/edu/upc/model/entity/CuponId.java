@@ -2,14 +2,15 @@ package pe.edu.upc.model.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 
 @Embeddable
 public class CuponId implements Serializable{
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
+    private static final long serialVersionUID = 4925787537805525445L;
+    
+    @Column(name = "nc")    
     private int nCupon;
 
     private Bond idBond;
