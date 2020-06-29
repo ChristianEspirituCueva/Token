@@ -26,12 +26,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void eliminar(Integer id) {
+    public void eliminar(int id) {
         userRepo.deleteById(id);
     }
 
     @Override
-    public Optional<UserApp> listId(Integer id){
+    public Optional<UserApp> listId(int id){
         return userRepo.findById(id);
     }
 

@@ -15,6 +15,6 @@ public interface BondRepository extends JpaRepository<Bond,Integer>{
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query(value = "Update Bond b set b.tcea=:tcea,b.tceaEscudo=:tcea_escudo, b.treaBonista=:trea,b.cPrice =:cprice, b.vna=:vna  where b.id=:id")
-    void updateBondResults(@Param("id") Integer id,@Param("tcea") double tcea,@Param("tcea_escudo") double tcea_escudo,@Param("trea") double trea
+    void updateBondResults(@Param("id") int id,@Param("tcea") double tcea,@Param("tcea_escudo") double tcea_escudo,@Param("trea") double trea
     , @Param("cprice") double cPrice, @Param("vna") double vna);
 }

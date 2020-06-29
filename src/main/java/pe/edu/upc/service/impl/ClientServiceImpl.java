@@ -27,12 +27,12 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
-    public void eliminar(Integer id) {
+    public void eliminar(int id) {
         clientRepo.deleteById(id);
     }
 
     @Override
-    public Optional<Client> listId(Integer id){
+    public Optional<Client> listId(int id){
         return clientRepo.findById(id);
     }
 

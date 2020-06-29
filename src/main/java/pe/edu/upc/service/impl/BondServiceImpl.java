@@ -16,7 +16,7 @@ public class BondServiceImpl implements BondService{
     BondRepository bondRepo;
 
     @Override
-    public void results(Integer id,double tcea,double tcea_escudo,double trea_bonista,double cPrice,double vna){
+    public void results(int id,double tcea,double tcea_escudo,double trea_bonista,double cPrice,double vna){
         bondRepo.updateBondResults(id,tcea, tcea_escudo, trea_bonista,cPrice,vna);
     }
 
@@ -31,12 +31,12 @@ public class BondServiceImpl implements BondService{
     }
 
     @Override
-    public void eliminar(Integer id) {
+    public void eliminar(int id) {
         bondRepo.deleteById(id);
     }
 
     @Override
-    public Optional<Bond> listId(Integer id){
+    public Optional<Bond> listId(int id){
         return bondRepo.findById(id);
     }
 

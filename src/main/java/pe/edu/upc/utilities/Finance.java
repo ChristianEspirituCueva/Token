@@ -3,57 +3,39 @@ package pe.edu.upc.utilities;
 
 public final class Finance{
 
-    private static final double LOW_RATE = 0.01;
-    private static final double HIGH_RATE = 0.5;
-    private static final double MAX_ITERATION = 1000;
-    private static final double PRECISION_REQ = 0.00000001;
+    public static double computeIRR(final double[] cashFlows)
+    {
+        final int MAX_ITER = 20;
+        double EXCEL_EPSILON = 0.0000001;
 
-    public static double computeIRR(double cf[], int numOfFlows){
-        int i = 0,j = 0;
-        double m = 0.0;
-        double old = 0.00;
-        double last = 0.00;
-        double oldguessRate = LOW_RATE;
-        double newguessRate = LOW_RATE;
-        double guessRate = LOW_RATE;
-        double lowGuessRate = LOW_RATE;
-        double highGuessRate = HIGH_RATE;
-        double npv = 0.0;
-        double denom = 0.0;
-        for(i=0; i<MAX_ITERATION; i++){
-            npv = 0.00;
-            for(j=0; j<numOfFlows; j++){
-                denom = Math.pow((1 + guessRate),j);
-                npv = npv + (cf[j]/denom);
+        double x = 0.1;
+        int iter = 0;
+        while (iter++ < MAX_ITER) {
+            final double x1 = 1.0 + x;
+            double fx = 0.0;
+            double dfx = 0.0;
+            for (int i = 0; i < cashFlows.length; i++) {
+                final double v = cashFlows[ i ];
+                final double x1_i = Math.pow( x1, i );
+                fx += v / x1_i;
+                final double x1_i1 = x1_i * x1;
+                dfx += -i * v / x1_i1;
             }
-            /* Stop checking once the required precision is achieved */
-            if((npv > 0) && (npv < PRECISION_REQ))
-            break;
-            if(old == 0)
-            old = npv;
-            else
-            old = last;
-            last = npv;
-            if(i > 0){
-                if(old < last){
-                    if(old < 0 && last < 0)
-                    highGuessRate = newguessRate;
-                    else
-                    lowGuessRate = newguessRate;
-                }
-                else{
-                    if(old > 0 && last > 0)
-                    lowGuessRate = newguessRate;
-                    else
-                    highGuessRate = newguessRate;
+            final double new_x = x - fx / dfx;
+            final double epsilon = Math.abs( new_x - x );
+
+            if (epsilon <= EXCEL_EPSILON) {
+                if (x == 0.0 && Math.abs( new_x ) <= EXCEL_EPSILON) {
+                    return 0.0; // OpenOffice calc does this
+                } else {
+                    return new_x*100;
                 }
             }
-            oldguessRate = guessRate;
-            guessRate = (lowGuessRate + highGuessRate) / 2;
-            newguessRate = guessRate;
+            x = new_x;
         }
-        return guessRate;
+        return x;
     }
+    
 }
 
 

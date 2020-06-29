@@ -3,26 +3,34 @@ package pe.edu.upc.model.entity;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
+//import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
+//import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+//import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Cupon")
 public class Cupon {
 
-	@EmbeddedId
-	private CuponId id;
+	//@EmbeddedId
+	//private CuponId id;
 
-	@MapsId("idBond")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
+	@Column(name = "nc",nullable = false)
+    private int nCupon;
+
+	//@MapsId("idBond")
 	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name ="idBond", referencedColumnName = "idBond")
-	})	
+	@JoinColumn(name ="idBond", referencedColumnName = "idBond")		
 	private Bond idBond;
 
     //@Id
@@ -70,7 +78,7 @@ public class Cupon {
 	}
 
 	public Cupon(String pg,float bono, float bonoInd, float interes, double cuota, double amort, float prima,float escudo,
-	double flujoE, double flujoEcE, double flujoB) {		
+	double flujoE, double flujoEcE, double flujoB, int ncupon, Bond idbond) {		
 		this.pg= pg;
 		this.bono = bono;
 		this.bonoInd = bonoInd;
@@ -83,14 +91,24 @@ public class Cupon {
 		this.flujoEcE = flujoEcE;
 		this.flujoB = flujoB;
 		this.fechaPago=null;
+		this.nCupon= ncupon;
+		this.idBond= idbond;
 	}
 
-	public CuponId getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(CuponId idCupon) {
+	public void setId(int idCupon) {
 		this.id = idCupon;
+	}
+
+	public int getNCupon(){
+		return nCupon;
+	}
+
+	public void setNCupon(int nCupon){
+		this.nCupon=nCupon;
 	}
 
 	public float getBono() {

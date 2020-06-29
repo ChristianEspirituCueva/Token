@@ -24,28 +24,32 @@ public class CuponServiceImpl implements CuponService{
 
         float vNominal = t.getvNominal();
         float vComercial = t.getvComercial();
-        Integer nAnios = t.getNYears();
-        Integer dxp = t.getDxp();
-        Integer dxa = t.getDxA();
-        Integer npxa = dxa/dxp;
-        Integer np = npxa*nAnios;
-        float impRenta = t.getImpRenta();
-        float pPrima = t.getpPrima();
-        float pEstruc = t.getpEstruc();
-        float pCol = t.getPCol();
-        float pFlot= t.getpFlot();
-        float pCavali = t.getpCavali();
-        float tea = t.getTea();
-        float tep = (float)Math.pow(1+tea,dxp/dxa)-1;
-        float d = t.getTDes();
-        float dp = (float)Math.pow(1+d,dxp/dxa)-1;
+        int nAnios = t.getNYears();
+        int dxp = t.getDxp();
+        int dxa = t.getDxA();
+        int npxa = dxa/dxp;
+        int np = npxa*nAnios;
+        float impRenta = t.getImpRenta()/100;
+        float pPrima = t.getpPrima()/100;
+        float pEstruc = t.getpEstruc()/100;
+        float pCol = t.getPCol()/100;
+        float pFlot= t.getpFlot()/100;
+        float pCavali = t.getpCavali()/100;
+        float tea = t.getTea()/100;
+        float freq=(float)dxp/(float)dxa;
+        float freq_inv=(float)dxa/(float)dxp;
+        double tep = (Math.pow(1+tea,freq)-1);
+        float d = t.getTDes()/100;
+        double dp = (Math.pow(1+d,freq)-1);
+        String method =t.getMethod();
 
-        float pextras= pFlot+pCavali+pEstruc+pCol;
+        float pextras= -(pFlot+pCavali+pEstruc+pCol)*vComercial;
         float bono_ind=0.0f;
         float prima=0.0f;
         String pg="S";
 
-        float bono,interes,escudo;
+        float bono;
+        double interes,escudo;
         double cuota=0.0;
         double amort=0.0;
         double flujoE[] = {};
@@ -54,7 +58,7 @@ public class CuponServiceImpl implements CuponService{
 
         double flujofE[] = {vComercial + pextras};
         double flujofEcE[] = {flujofE[0]};
-        double flujofB[] = {vComercial-(vComercial*(pFlot+pCavali))};
+        double flujofB[] = {-vComercial-(vComercial*(pFlot+pCavali))};
 
         for(int i=0;i<np;i++){
             
@@ -67,7 +71,7 @@ public class CuponServiceImpl implements CuponService{
             bono_ind=bono*(1+0);
             interes = -1*bono_ind*tep;
 
-            if(t.getMethod()=="Frances"){                
+            if( method.equals("Frances")){                
                 if(pg=="T"){
                     cuota=0;
                     amort=0;
@@ -78,7 +82,7 @@ public class CuponServiceImpl implements CuponService{
                     cuota=(-1)*bono_ind*tep/(1-Math.pow(1+tep,(-1)*(np-(i+1)+1)));
                     amort=cuota-interes;
                 }                
-            } else if(t.getMethod() == "Aleman"){                
+            } else if(method.equals("Aleman")){                
                 if(pg=="T"){
                     cuota=0;
                     amort=0;
@@ -89,7 +93,7 @@ public class CuponServiceImpl implements CuponService{
                     cuota=interes+amort;
                     amort=(-1)*bono_ind/(np-(i+1)+1);
                 }
-            } else if(t.getMethod() == "Americano"){                
+            } else if(method.equals("Americano")){
                 if(pg=="T"){
                     cuota=0;                
                 } else if(pg=="P"){
@@ -110,15 +114,16 @@ public class CuponServiceImpl implements CuponService{
             
             escudo=(-1)*interes*impRenta;
             
-            flujoE=ArrayUtils.addAll(flujoE,cuota+prima);
+            if((i+1)==np){
+                flujoE=ArrayUtils.addAll(flujoE,-bono_ind+cuota+prima);
+            }else{
+                flujoE=ArrayUtils.addAll(flujoE,cuota);
+            }
             flujoEcE=ArrayUtils.addAll(flujoEcE,escudo+flujoE[i]);
-            flujoB=ArrayUtils.addAll(flujoB,(-1)*flujoE[i]);
-            //flujoA=ArrayUtils.addAll(flujoA,flujoB[i]/((float)Math.pow(1+dp,i+1)));
-            //flujoAxP=ArrayUtils.addAll(flujoAxP,flujoA[i]*(i+1)*(dxp/dxa));
-            //factorsConv=ArrayUtils.addAll(factorsConv,flujoA[i]*(i+1)*(1+(i+1)));
+            flujoB=ArrayUtils.addAll(flujoB,(-1)*flujoE[i]);            
             
-            Cupon cupon = new Cupon(pg,bono,bono_ind,interes,cuota,amort,prima,escudo,
-            flujoE[i],flujoEcE[i],flujoB[i]);
+            Cupon cupon = new Cupon(pg,bono,bono_ind,(float)interes,cuota,amort,prima,(float)escudo,
+            flujoE[i],flujoEcE[i],flujoB[i],i+1,t);
             cuponRepo.save(cupon);
             cupon=null;
         }
@@ -130,14 +135,14 @@ public class CuponServiceImpl implements CuponService{
         flujofEcE = ArrayUtils.addAll(flujofEcE,flujoEcE);
         flujofB = ArrayUtils.addAll(flujofB, flujoB);
 
-        tirE = Finance.computeIRR(flujofE, flujofE.length);//una funcion tir de todo el flujo emisor
-        tceaE = Math.pow(tirE+1,dxp/dxa)-1;
-        tirEcE = Finance.computeIRR(flujofEcE, flujofEcE.length);//funcion tir de todo el flujo emisor con escudo
-        tceaEcE = Math.pow(tirEcE +1,dxp/dxa)-1;
-        tirB = Finance.computeIRR(flujofB, flujofB.length);//funcion tir de todo el flujo bonista
-        treaB = Math.pow(tirB+1,dxp/dxa)-1;
+        tirE = Finance.computeIRR(flujofE)/100;//una funcion tir de todo el flujo emisor
+        tceaE = Math.pow(tirE+1,freq_inv)-1;
+        tirEcE = Finance.computeIRR(flujofEcE)/100;//funcion tir de todo el flujo emisor con escudo
+        tceaEcE = Math.pow(tirEcE +1,freq_inv)-1;
+        tirB = Finance.computeIRR(flujofB)/100;//funcion tir de todo el flujo bonista
+        treaB = Math.pow(tirB+1,freq_inv)-1;
         Cprice = FinanceLib.npv(dp, flujoB);//una funcion vna del dp y tofo el flujo bonista
-        VNA = vComercial-(vComercial*(pFlot+pCavali)) + Cprice;//flujo bonista momento 0 + Precio actual
+        VNA = (-vComercial-(vComercial*(pFlot+pCavali))) + Cprice;//flujo bonista momento 0 + Precio actual
         
         t.setTcea(tceaE);
         t.setTceaEscudo(tceaEcE);
@@ -159,12 +164,12 @@ public class CuponServiceImpl implements CuponService{
     }
 
     @Override
-    public void eliminar(Integer id) {
+    public void eliminar(int id) {
         cuponRepo.deleteById(id);
     }
 
     @Override
-    public Optional<Cupon> listId(Integer id){
+    public Optional<Cupon> listId(int id){
         return cuponRepo.findById(id);
     }
 

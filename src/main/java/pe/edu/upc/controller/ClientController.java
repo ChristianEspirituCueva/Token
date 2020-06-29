@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import pe.edu.upc.exception.ModelNotFoundException;
 import pe.edu.upc.model.entity.Client;
+import pe.edu.upc.model.entity.UserApp;
 import pe.edu.upc.service.ClientService;
 
 @RestController
@@ -49,9 +51,18 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<Client> registrar(@Valid @RequestBody Client cliente){
-        Client clientNew = new Client();
-        clientNew = clientService.registrar(cliente);
+    public ResponseEntity<Client> registrar(@Valid @RequestBody String cliente){
+        JSONObject js= new JSONObject(cliente);
+        UserApp user = new UserApp();
+        user.setid(js.getJSONObject("idUser").getInt("id"));
+        Client clientNew = new Client(
+            user,
+            js.getString("document"),
+            js.getString("ruc"),
+            js.getString("company"),
+            js.getJSONObject("idUser").getInt("id")
+        );
+        clientNew = clientService.registrar(clientNew);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(clientNew.getId()).toUri();
         return ResponseEntity.created(location).build();
     }

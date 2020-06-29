@@ -53,6 +53,7 @@ public class UserController {
     public ResponseEntity<UserApp> registrar(@Valid @RequestBody UserApp user){
         UserApp userNew= new UserApp();
         userNew = userService.registrar(user);
+        System.out.println(userNew.getId());
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userNew.getId()).toUri();
         return ResponseEntity.created(location).build();
     }

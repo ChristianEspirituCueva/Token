@@ -5,10 +5,13 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+//import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="Client")
@@ -16,7 +19,7 @@ public class Client {
 
 	@Id
 	@Column(name = "IdClient")
-	private Integer idClient;
+	private int idClient;
 		
 	@Column(name="Document",nullable = false)
 	private String document;
@@ -31,14 +34,28 @@ public class Client {
 	@MapsId
 	private UserApp user;
 	
-	@OneToMany(mappedBy = "idclient")
-	private List<Bond> bonos;	
+	@JsonIgnore
+	@OneToMany(mappedBy = "idClient")
+	private List<Bond> bonos;
+
+	public Client(){
+
+	}
+
+	public Client(UserApp user,String documento,String ruc,String company,int id){
+		super();
+		this.user=user;
+		this.document=documento;
+		this.ruc=ruc;
+		this.company=company;
+		this.idClient=id;
+	}
 	
-	public Integer getId() {
+	public int getId() {
 		return idClient;
 	}
 
-	public void setId(Integer idClient) {
+	public void setId(int idClient) {
 		this.idClient = idClient;
 	}
 

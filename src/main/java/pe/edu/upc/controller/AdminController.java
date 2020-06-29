@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pe.edu.upc.service.AdminService;
 import pe.edu.upc.exception.ModelNotFoundException;
 import pe.edu.upc.model.entity.Admin;
+import pe.edu.upc.model.entity.UserApp;
 
 @RestController
 @RequestMapping("/admin")
@@ -50,9 +52,16 @@ public class AdminController {
     }
 
     @PostMapping
-    public ResponseEntity<Admin> registrar(@Valid @RequestBody Admin admin){
-        Admin adminNew= new Admin();
-        adminNew = adminService.registrar(admin);
+    public ResponseEntity<Admin> registrar(@Valid @RequestBody String admin){
+        JSONObject js = new JSONObject(admin);
+        UserApp user = new UserApp();
+        user.setid(js.getJSONObject("idUser").getInt("id"));
+        Admin adminNew= new Admin(
+            user,
+            js.getString("cargo"),
+            js.getJSONObject("idUser").getInt("id")
+        );
+        adminNew = adminService.registrar(adminNew);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(adminNew.getId()).toUri();
         return ResponseEntity.created(location).build();
     }

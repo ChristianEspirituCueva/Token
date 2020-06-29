@@ -8,9 +8,9 @@ public interface CrudService<T> {
 
     T modificar(T t);
 
-    void eliminar(Integer t);
+    void eliminar(int id);
 
-    Optional<T> listId(Integer id);
+    Optional<T> listId(int id);
 
     List<T> listar();
 }

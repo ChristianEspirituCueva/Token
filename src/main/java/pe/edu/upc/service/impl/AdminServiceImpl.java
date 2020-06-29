@@ -27,12 +27,12 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public void eliminar(Integer id) {
+    public void eliminar(int id) {
         adminRepo.deleteById(id);
     }
 
     @Override
-    public Optional<Admin> listId(Integer id){
+    public Optional<Admin> listId(int id){
         return adminRepo.findById(id);
     }
 

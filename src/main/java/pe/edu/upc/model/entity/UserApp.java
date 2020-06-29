@@ -16,7 +16,7 @@ public class UserApp{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
-    private Integer id;
+    private int id;
 
     @Size(max = 15)
     @Column(name = "Username",nullable = false,unique = true)
@@ -43,11 +43,11 @@ public class UserApp{
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)    
     private Client client;
 
-    public Integer getId(){
+    public int getId(){
         return id;
     }
 
-    public void setid(Integer id){
+    public void setid(int id){
         this.id=id;
     }
 

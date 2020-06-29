@@ -10,12 +10,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "admin")
 public class Admin{
     @Id
     @Column(name="idAdmin")
-    private Integer idAdmin;
+    private int idAdmin;
     
     @Column(name = "Cargo",nullable = false)
     private String cargo;
@@ -25,14 +27,26 @@ public class Admin{
     @MapsId
     private UserApp user;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "idCreator")
     private List<Bond> bonos;
 
-    public Integer getId(){
+    public Admin(){
+
+    }
+
+    public Admin(UserApp user, String cargo,int id){
+        super();
+        this.user=user;
+        this.cargo=cargo;
+        this.idAdmin=id;
+    }
+
+    public int getId(){
         return idAdmin;
     }
 
-    public void setid(Integer id){
+    public void setid(int id){
         idAdmin=id;
     }
 

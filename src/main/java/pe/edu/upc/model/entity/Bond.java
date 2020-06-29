@@ -1,6 +1,6 @@
 package pe.edu.upc.model.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -18,7 +18,7 @@ import javax.persistence.Table;
 public class Bond{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idBond;
+    private int idBond;
 
     @ManyToOne
     @JoinColumn(name="idAdmin",nullable = false)
@@ -29,11 +29,9 @@ public class Bond{
 
     @Column(name="VComercial",nullable = false)
 	private float vComercial;
-
-	//@Min(0)
-	//N de años, asumimos que el numero de días por año es 360
+	
     @Column(name="nYears",nullable = false)
-    private Integer nYears; //n anios
+    private int nYears;
 	
 	//dias por periodo
 	@Column(name="dxp",nullable = false)
@@ -75,10 +73,10 @@ public class Bond{
     @Column(name="Method",nullable = false,length = 100)
     private String method;
 
-    @Column(name="FecEmision",nullable = false)
+    @Column(name="FecEmision",nullable = true)
     private Date fecEmision;
 
-    @Column(name="FecLiqu",nullable = false)
+    @Column(name="FecLiqu",nullable = true)
     private Date fecLiqu;
 
     @Column(name="TceaEscudo",nullable = true)
@@ -101,19 +99,43 @@ public class Bond{
 
     @ManyToOne
     @JoinColumn(name="idClient",nullable = true)
-	private Client idclient;
+	private Client idClient;
 
-    @Column(name="TypeMoney",nullable = false ,length = 100)
+    @Column(name="TypeMoney",nullable = false)
 	private String typeMoney;
 	
 	@OneToMany(mappedBy = "idBond")
 	private List<Cupon> cupons;
 
-    public Integer getId() {
+	public Bond(){
+		super();
+	}
+
+	public Bond(Admin admin,float vNominal,float vComerial,int nYears, int dxp,int dxa,float impRenta, float pCol, float tDes, float tea,float pPrima, float pEstruc, float pFlot, float pCavali, String method, boolean estado, String Money){
+		this.idCreator=admin;
+		this.vNominal=vNominal;
+		this.vComercial = vComerial;
+		this.nYears=nYears;
+		this.dxp=dxp;
+		this.dxa=dxa;
+		this.impRenta=impRenta;
+		this.pCol=pCol;
+		this.pPrima=pPrima;
+		this.pFlot=pFlot;
+		this.pEstruc=pEstruc;
+		this.pCavali=pCavali;
+		this.tea=tea;
+		this.tDes=tDes;
+		this.method=method;
+		this.estado=estado;
+		this.typeMoney=Money;
+	}
+
+    public int getId() {
 		return idBond;
 	}
 
-	public void setId(Integer idBond) {
+	public void setId(int idBond) {
 		this.idBond = idBond;
 	}
 
@@ -133,11 +155,11 @@ public class Bond{
 		this.vComercial = vComercial;
 	}
 
-	public Integer getNYears() {
+	public int getNYears() {
 		return nYears;
 	}
 
-	public void setNYears(Integer nYears) {
+	public void setNYears(int nYears) {
 		this.nYears = nYears;
 	}
 
@@ -181,7 +203,7 @@ public class Bond{
 		this.pCavali = pCavali;
 	}
 
-	public Integer getDxp() {
+	public int getDxp() {
 		return dxp;
 	}
 
@@ -189,7 +211,7 @@ public class Bond{
 		this.dxp = dxp;
 	}
 
-	public Integer getDxA(){
+	public int getDxA(){
 		return dxa;
 	}
 
@@ -310,11 +332,11 @@ public class Bond{
 	}
 
 	public Client getIdClient(){
-		return idclient;
+		return idClient;
 	}
 
 	public void setIdClient(Client client){
-		idclient=client;
+		idClient=client;
 	}
 
 	public List<Cupon> getCupons(){
