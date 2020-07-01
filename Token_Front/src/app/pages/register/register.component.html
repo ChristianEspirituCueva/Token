@@ -1,0 +1,87 @@
+<div style="width: 100%;height: 100%;display: flex; flex-direction: column; align-items: center; margin-top: 7%;" [hidden]="visibilidad()">
+  <div>
+    <mat-card style="margin-bottom: 10px;">
+      <b style="font-size: 15px;color: #3f51b5;">Bienvenido!</b>
+       necesitamos los siguientes datos 
+      <b style="font-size: 15px;color: #3f51b5;">:)</b>
+    </mat-card>
+    <div class="example-form">
+      <table class="example-full-width" cellspacing="0"><tr>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Nombres</mat-label>
+          <input matInput placeholder="Ex. Diego" value="" [(ngModel)]="nombre" required>
+        </mat-form-field></td>
+        <td><mat-form-field class="example-full-width">
+          <mat-label>Apellidos</mat-label>
+          <input matInput placeholder="Ex. Arellano" value="" [(ngModel)]="apellido" required>
+        </mat-form-field></td>
+      </tr></table>    
+      <mat-form-field class="example-full-width">
+        <mat-label>Usuario</mat-label>
+        <input matInput placeholder="Ex. DArellano" value="" [(ngModel)]="usuario" required>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input matInput placeholder="********" value="" [(ngModel)]="password" required>
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>telefono</mat-label>
+        <input matInput type="number" placeholder="933833967" value="" [(ngModel)]="telefono" required>
+      </mat-form-field>      
+      <div style="display: flex; justify-content: center;">
+        <button (click)="step2()" [disabled]="validacion()" mat-raised-button color="primary">Continuar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="width: 100%;height: 100%;display: flex; flex-direction: column; align-items: center; margin-top: 4%;" [hidden]="visibilidad1()" >
+  <div>
+    <mat-card style="margin-bottom: 10px;">
+      Hola nuevo usuario, queremos saber si eres administrador o cliente 
+      <b style="font-size: 15px;color: #3f51b5;">!!</b>
+    </mat-card>
+    <div style="display: flex; justify-content: center;">
+      <button (click)="step3()" [disabled]="validacion1()" mat-raised-button color="primary">Continuar</button>
+    </div>
+  </div>
+</div>
+
+<div style="width: 100%;height: 100%;display: flex; flex-direction: column; align-items: center; margin-top: 4%;">
+  <div>
+    <mat-card style="margin-bottom: 10px;">
+      <b style="font-size: 15px;color: #3f51b5;">Bienvenido,</b> 
+      necesitamos los siguientes datos 
+      <b style="font-size: 15px;color: #3f51b5;">:)</b>
+    </mat-card>
+    <mat-form-field class="example-full-width">
+      <mat-label>documento</mat-label>
+      <input matInput placeholder="933833967" value="" [(ngModel)]="document">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>ruc</mat-label>
+      <input matInput placeholder="933833967" value="" [(ngModel)]="ruc">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>empresa</mat-label>
+      <input matInput placeholder="Ex. Intercorp" value="" [(ngModel)]="company">
+    </mat-form-field>
+    <div style="display: flex; justify-content: center;">
+      <button (click)="registrarCliente()" [disabled]="validacion2()" mat-raised-button color="primary">Finalizar!</button>
+    </div>
+  </div>
+</div>
+
+<div style="width: 100%;height: 100%;display: flex; flex-direction: column; align-items: center; margin-top: 4%;">
+  <div>
+    <mat-card style="margin-bottom: 10px;"><b style="font-size: 15px;color: #3f51b5;">Bienvenido!</b> necesitamos los siguientes datos <b style="font-size: 15px;color: #3f51b5;">:)</b>
+    </mat-card>
+    <mat-form-field class="example-full-width">
+      <mat-label>cargo</mat-label>
+      <input matInput placeholder="Analista Financiero" value="" [(ngModel)]="cargo">
+    </mat-form-field> 
+    <div style="display: flex; justify-content: center;">
+      <button (click)="registrarAdmin()" [disabled]="validacion3()" mat-raised-button color="primary">Finalizar!</button>
+    </div>
+  </div>
+</div>
