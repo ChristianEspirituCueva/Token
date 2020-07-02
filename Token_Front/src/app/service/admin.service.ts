@@ -7,7 +7,7 @@ import {HttpClient} from '@angular/common/http'
   providedIn: 'root'
 })
 export class AdminService {
-  url: string = `${HOST}/admin`
+  url: string = `/api/admin`
 
   constructor(private http: HttpClient) { }
 

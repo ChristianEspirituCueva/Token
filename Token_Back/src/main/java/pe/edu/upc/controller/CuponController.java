@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import pe.edu.upc.exception.ModelNotFoundException;
+import pe.edu.upc.model.entity.Bond;
 import pe.edu.upc.model.entity.Cupon;
 import pe.edu.upc.service.CuponService;
 
@@ -40,13 +41,13 @@ public class CuponController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Cupon> listarId(@PathVariable("id") Integer id){
-        Optional<Cupon> cupon =cuponService.listId(id);
-        if(!cupon.isPresent()){
-        throw new ModelNotFoundException("ID:"+ id);
-        }
+    public ResponseEntity<List<Cupon>> listarxIdBono(@PathVariable("id") Integer id){
+        Bond bonoNew= new Bond();
+        bonoNew.setId(id);
 
-        return new ResponseEntity<Cupon>(cupon.get(),HttpStatus.OK);
+        List<Cupon> cupones = cuponService.CuponsBond(bonoNew);
+
+        return new ResponseEntity<List<Cupon>>(cupones,HttpStatus.OK);
     }
 
     @PostMapping

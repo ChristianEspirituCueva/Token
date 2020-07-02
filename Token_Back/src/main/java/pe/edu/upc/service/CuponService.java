@@ -1,5 +1,7 @@
 package pe.edu.upc.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import pe.edu.upc.model.entity.Bond;
@@ -10,4 +12,5 @@ public interface CuponService extends CrudService<Cupon>{
 
     public Bond generateCupons(Bond t);
     
+    public List<Cupon> CuponsBond(Bond t);
 }

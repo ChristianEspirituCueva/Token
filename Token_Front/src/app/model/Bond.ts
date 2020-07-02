@@ -1,7 +1,5 @@
 export class Bond{
-	idCreator:{
-		id:number;
-	}
+	idcreator:number;
     vNominal:number;
 	vComercial:number;
 	nYears:number;

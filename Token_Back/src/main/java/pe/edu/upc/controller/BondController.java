@@ -63,7 +63,7 @@ public class BondController {
         
         JSONObject js= new JSONObject(bono);       
         Admin user= new Admin();
-        user.setid(js.getJSONObject("idCreator").getInt("id"));
+        user.setid(js.getInt("idcreator"));
         //Date fecEmision = DateUtils.parseDate(js.getString("fecEmision"),new String[] { "yyyy-MM-dd HH:mm:ss", "dd/MM-yyyy" });
         //Date fecliqu = DateUtils.parseDate(js.getString("fecLiqu"),new String[] { "yyyy-MM-dd HH:mm:ss", "dd/MM-yyyy" });
         Bond bonoNew= new Bond(
@@ -91,7 +91,7 @@ public class BondController {
         bonoNew = cuponservice.generateCupons(bonoNew);
         bondService.results(bonoNew.getId(),bonoNew.getTcea(),bonoNew.getTceaEscudo(),bonoNew.getTreaBonista(),bonoNew.getCPrice(),bonoNew.getVna());
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(bonoNew.getId()).toUri();
-        return ResponseEntity.created(location).build();
+        return new ResponseEntity<Bond>(bonoNew,HttpStatus.OK);
     }
 
     @PutMapping

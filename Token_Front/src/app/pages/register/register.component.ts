@@ -5,6 +5,7 @@ import { ClientService} from './../../service/client.service';
 import { AdminService} from './../../service/admin.service';
 import { MatSnackBar} from '@angular/material/snack-bar'
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import {Router} from '@angular/router'
 
 @Component({
   selector: 'app-register',
@@ -12,6 +13,18 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+
+  public logDisplay : boolean = false;
+  id: string = localStorage.getItem("idAdmin")
+
+  /*ngOnInit(): void {
+    if (this.id) {
+      this.logInDiv=false
+    } else {
+      this.logInDiv=true;
+    }
+  }*/
+
 
   nombre: string = "";
   apellido: string = "";
@@ -23,15 +36,32 @@ export class RegisterComponent implements OnInit {
   company: string = "";
   cargo: string="";
 
-  v1: number =0;
-  v2:number = 1;
-  v3:number = 1;
-  v4:number = 1;
+  userPick: string;
+  typeUser: string[] = ['Administrador', 'Cliente'];
+  code:string;
 
-  constructor(private clienteS: ClientService,private adminS: AdminService,private snackBar: MatSnackBar) { }
+  v1: boolean = true;
+  v2: boolean = false;
+  v3: boolean = false;
+  v4: boolean = false;
+  hide: boolean = true;
+
+  isAdmin: boolean;
+
+  constructor(private clienteS: ClientService,private adminS: AdminService,private snackBar: MatSnackBar,
+    private router: Router) { }
 
   ngOnInit(): void {
     
+  }
+
+  validate(){
+    if(this.userPick==="Administrador"){
+      this.isAdmin=false;
+      console.log(this.code);
+    }else{
+      this.isAdmin=true;
+    }
   }
 
   validacion(){
@@ -40,19 +70,30 @@ export class RegisterComponent implements OnInit {
     }
 
     return false;
+  }  
+
+  validacion1(){
+    if(this.userPick==="Administrador" && this.code==="ecpcg"){      
+      return false;
+    }else if(this.userPick==="Cliente"){
+      return false;
+    }
+    return true;
   }
 
   step2(){
-    this.v1=1;
-    this.v2=0;
+    this.v1=false;
+    this.v2=true;
   }
 
   step3(){
-    
-  }
-
-  validacion1(){
-
+    if(this.userPick==="Administrador" && this.code==="ecpcg"){
+      this.v2=false;
+      this.v4=true;
+    }else{
+      this.v2=false;
+      this.v4=true;
+    }
   }
 
   validacion2(){
@@ -69,38 +110,7 @@ export class RegisterComponent implements OnInit {
     }
 
     return false;
-  }
-  visibilidad(){
-    if(this.v1===0){
-      return false;
-    }else{
-      return true;
-    }
-  }
-
-  visibilidad1(){
-    if(this.v2===0){
-      return false;
-    }else{
-      return true;
-    }
-  }
-
-  visibilidad2(){
-    if(this.v3===0){
-      return false;
-    }else{
-      return true;
-    }
-  }
-
-  visibilidad3(){
-    if(this.v4===0){
-      return false;
-    }else{
-      return true;
-    }
-  }
+  }  
 
   clearControls(){
     this.document = "";
@@ -110,6 +120,7 @@ export class RegisterComponent implements OnInit {
     this.apellido = "";
     this.usuario = "";
     this.telefono = 0;
+    this.cargo="";
   }
 
   registrarCliente(){
@@ -127,7 +138,10 @@ export class RegisterComponent implements OnInit {
     this.clienteS.registrar(cliente).subscribe(data => {
       this.snackBar.open("Usuario registrada.", "Aviso", { duration: 2000 });
       this.clearControls();
+      console.log(data);
     });
+
+    this.router.navigateByUrl('login');
   }
 
   registrarAdmin(){
@@ -144,5 +158,7 @@ export class RegisterComponent implements OnInit {
       this.snackBar.open("Usuario registrada.", "Aviso", { duration: 2000 });
       this.clearControls();
     });
+
+    this.router.navigateByUrl('login');
   }
 }

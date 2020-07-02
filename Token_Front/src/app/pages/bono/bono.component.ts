@@ -6,6 +6,7 @@ import {MediaMatcher} from '@angular/cdk/layout';
 import {Bond} from './../../model/Bond';
 import {BondService} from './../../service/bond.service';
 import {ChangeDetectorRef, OnDestroy} from '@angular/core';
+import {Router} from '@angular/router'
 
 @Component({
   selector: 'app-bono',
@@ -13,6 +14,7 @@ import {ChangeDetectorRef, OnDestroy} from '@angular/core';
   styleUrls: ['./bono.component.css']
 })
 export class BonoComponent implements OnInit {
+  
   
   vNominal : number = 0.0;
   vComercial: number=0.0;
@@ -48,7 +50,7 @@ export class BonoComponent implements OnInit {
   paginator: MatPaginator;
 
   isEditMode = false;
-  constructor(private bondS:BondService,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+  constructor(private bondS:BondService,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private router: Router) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -82,12 +84,15 @@ export class BonoComponent implements OnInit {
     bono.method = this.method;
     bono.typeMoney = this.typeMoney;
     bono.estado=false;
-    bono.idCreator.id=parseInt(localStorage.getItem("id"));
+    let x = localStorage.getItem("idAdmin");
+    let y : number  =+ x;
+    bono.idcreator=y;
 
     this.bondS.registrar(bono).subscribe(data => {
       //this.snackBar.open("Usuario registrada.", "Aviso", { duration: 2000 });
       //this.clearControls();
       console.log(data);
+      this.router.navigateByUrl('detalleBono/'+data["id"]);
     });
 
   }

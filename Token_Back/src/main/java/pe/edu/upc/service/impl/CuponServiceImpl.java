@@ -153,6 +153,10 @@ public class CuponServiceImpl implements CuponService{
         return t;
     }
 
+    public List<Cupon> CuponsBond(Bond t){
+        return cuponRepo.CuponsBond(t);
+    }
+
     @Override
     public Cupon registrar(Cupon t){
         return cuponRepo.save(t);

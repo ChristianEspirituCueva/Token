@@ -1,5 +1,5 @@
-<div style="width: 100%;height: 100%;display: flex; flex-direction: column; align-items: center; margin-top: 7%;" [hidden]="visibilidad()">
-  <div>
+<div style="width: 100%;height: 100%;display: flex; flex-direction: column; align-items: center; margin-top: 7%;">
+  <div [ngStyle]="{'display': v1 ? 'block' : 'none'}">
     <mat-card style="margin-bottom: 10px;">
       <b style="font-size: 15px;color: #3f51b5;">Bienvenido!</b>
        necesitamos los siguientes datos 
@@ -21,8 +21,11 @@
         <input matInput placeholder="Ex. DArellano" value="" [(ngModel)]="usuario" required>
       </mat-form-field>
       <mat-form-field class="example-full-width">
-        <mat-label>Password</mat-label>
-        <input matInput placeholder="********" value="" [(ngModel)]="password" required>
+        <mat-label>Paswoord</mat-label>
+        <input matInput placeholder="*******" [type]="hide ? 'password' : 'text'" value="" [(ngModel)]="password" required>                
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
       </mat-form-field>
       <mat-form-field class="example-full-width">
         <mat-label>telefono</mat-label>
@@ -33,25 +36,30 @@
       </div>
     </div>
   </div>
-</div>
 
-<div style="width: 100%;height: 100%;display: flex; flex-direction: column; align-items: center; margin-top: 4%;" [hidden]="visibilidad1()" >
-  <div>
+ <div style="padding-top: 30px;" [ngStyle]="{'display': v2 ? 'block' : 'none'}">
     <mat-card style="margin-bottom: 10px;">
       Hola nuevo usuario, queremos saber si eres administrador o cliente 
-      <b style="font-size: 15px;color: #3f51b5;">!!</b>
+      <b style="font-size: 15px;color: #3f51b5;">!!</b>      
+      <mat-radio-group aria-label="Selecciona un tipo de usuario" [(ngModel)]="userPick" style="width: 100%;display: flex; justify-content: space-around; margin-top: 20px;margin-bottom: 15px;" (click)="validate()">
+        <mat-radio-button class="example-radio-button" *ngFor="let user of typeUser" [value]="user">
+          {{user}}
+        </mat-radio-button>
+      </mat-radio-group>    
+      <mat-form-field class="validation" style="display: flex;justify-content: center;" [ngStyle]="{'display': isAdmin ? 'block' : 'none'}">
+        <mat-label>Codigo de verificacion</mat-label>
+        <input matInput placeholder="Escriba aqui el secret code" value="" [(ngModel)]="code">
+      </mat-form-field>
     </mat-card>
     <div style="display: flex; justify-content: center;">
       <button (click)="step3()" [disabled]="validacion1()" mat-raised-button color="primary">Continuar</button>
     </div>
   </div>
-</div>
 
-<div style="width: 100%;height: 100%;display: flex; flex-direction: column; align-items: center; margin-top: 4%;">
-  <div>
+ <div style="padding-top: 30px;width: 65%;" [ngStyle]="{'display': v3 ? 'block' : 'none'}">
     <mat-card style="margin-bottom: 10px;">
-      <b style="font-size: 15px;color: #3f51b5;">Bienvenido,</b> 
-      necesitamos los siguientes datos 
+      <b style="font-size: 15px;color: #3f51b5;">Vamos bien, </b> 
+      ahora necesitamos los siguientes datos 
       <b style="font-size: 15px;color: #3f51b5;">:)</b>
     </mat-card>
     <mat-form-field class="example-full-width">
@@ -70,11 +78,9 @@
       <button (click)="registrarCliente()" [disabled]="validacion2()" mat-raised-button color="primary">Finalizar!</button>
     </div>
   </div>
-</div>
 
-<div style="width: 100%;height: 100%;display: flex; flex-direction: column; align-items: center; margin-top: 4%;">
-  <div>
-    <mat-card style="margin-bottom: 10px;"><b style="font-size: 15px;color: #3f51b5;">Bienvenido!</b> necesitamos los siguientes datos <b style="font-size: 15px;color: #3f51b5;">:)</b>
+ <div style="padding-top: 30px;margin-bottom: 25px;" [ngStyle]="{'display': v4 ? 'block' : 'none'}">
+    <mat-card style="margin-bottom: 10px;"><b style="font-size: 15px;color: #3f51b5;">Vamos bien,</b> ahora necesitamos los siguientes datos <b style="font-size: 15px;color: #3f51b5;">:)</b>
     </mat-card>
     <mat-form-field class="example-full-width">
       <mat-label>cargo</mat-label>

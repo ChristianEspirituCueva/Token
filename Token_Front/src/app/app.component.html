@@ -303,7 +303,7 @@
 
       <mat-menu #menu="matMenu"></mat-menu>
     </div>
-    <div>
+    <div [ngStyle]="{'display': activarLog()? 'block' : 'none'}">
       <a mat-button href="/login" class="example-app-name" style="color: #fafafa;">Iniciar Sesión</a>
     </div>
 
@@ -311,22 +311,13 @@
 
   <mat-sidenav-container class="example-sidenav-container" >
       <mat-sidenav #sidenav mode="side" style="width: 200px" >                    
-          <button mat-menu-item (click)="sidenav.toggle()" routerLink="/bono" style="cursor: pointer" >
+          <button mat-menu-item (click)="sidenav.toggle()" routerLink="/nosotros" style="cursor: pointer" >
             <span>Nosotros</span>
           </button>
-          <button mat-menu-item (click)="sidenav.toggle()" routerLink="/bono" style="cursor: pointer" >
+          <button mat-menu-item (click)="sidenav.toggle()" routerLink="/developers" style="cursor: pointer" >
             <span>Developers</span>
-          </button>
-          <button mat-menu-item (click)="sidenav.toggle()" routerLink="/bono" style="cursor: pointer" >
-            <span>Registar Bono</span>
-          </button>
-          <button mat-menu-item (click)="sidenav.toggle()" routerLink="/bono" style="cursor: pointer" >
-            <span>Nuestros Bonos</span>
-          </button>
-          <button mat-menu-item (click)="sidenav.toggle()" routerLink="/bono" style="cursor: pointer" >
-            <span>Tus Bonos</span>
-          </button>
-          <button mat-menu-item (click)="sidenav.toggle()" routerLink="/bono" style="cursor: pointer" >
+          </button>          
+          <button mat-menu-item (click)="cerrarsesion()" routerLink="/" style="cursor: pointer" >
             <span>Cerrar Sesión</span>
           </button>          
     </mat-sidenav>

@@ -8,11 +8,21 @@ import {Router} from '@angular/router'
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit {  
+
+  /*ngOnInit(): void {
+    if (this.id) {
+      this.logInDiv=false
+    } else {
+      this.logInDiv=true;
+    }
+  }*/
 
   username: string = '';
   password: string = '';
   message: string= '';
+
+  hide: boolean= true;
 
 
   constructor(private userAppS:UserService,private router: Router) { }
@@ -29,8 +39,8 @@ export class LoginComponent implements OnInit {
         this.message="Oh no :( parece que el usuario o la contraseña son incorrectos"
       }else{
         localStorage.setItem('name', data['name']);
-        localStorage.setItem('id', data['id']);
-        this.router.navigateByUrl('cliente');        
+        localStorage.setItem('idAdmin', data['id']);
+        this.router.navigateByUrl('home');
       }
       console.log(data)
     });

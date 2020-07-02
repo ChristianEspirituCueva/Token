@@ -61,10 +61,10 @@ public class AdminController {
     public ResponseEntity<Admin> registrar(@Valid @RequestBody String admin){
         JSONObject js = new JSONObject(admin);
         UserApp userNew = new UserApp(
-            js.getString("username"),
-            js.getString("password"),
             js.getString("name"),
             js.getString("lastName"),
+            js.getString("username"),            
+            js.getString("password"), 
             js.getLong("phone")
         );
         userNew = userService.registrar(userNew);

@@ -1,0 +1,114 @@
+<div style="width: 100%;height: 100%;display: flex; flex-direction: column; align-items: center; margin-top:5px;">
+    <mat-card class="example-card" style="margin-bottom: 30px;margin-top: 30px;">
+        <mat-card-title>
+          Resumen
+        </mat-card-title>
+        <tbody>
+        <tr >
+          <td > Nominal</td>
+          <td > {{vNominal}} </td>
+          <td class="locura"> Metodo</td>
+          <td class="locura"> {{method}} </td>
+        </tr>
+        <tr>
+          <td > TCEA Escudo</td>
+          <td > {{tceaEscudo}} </td>
+          <td class="locura"> tcea</td>
+          <td class="locura"> {{tcea}} </td>
+        </tr>
+        <tr>
+          <td > TREA Bonista</td>
+          <td > {{treaBonista}} </td>
+          <td class="locura"> VNA</td>
+          <td class="locura"> {{vna}} </td>
+        </tr>
+        <tr>
+          <td > Tipo de Moneda</td>
+          <td > {{typeMoney}} </td>
+          <td class="locura"> Precio</td>
+          <td class="locura"> {{cprice}} </td>
+        </tr>
+        </tbody>         
+    </mat-card>        
+
+
+    <div class="mat-elevation-z8" style="width: 90%;">    
+
+        <table >
+            <thead>
+                <tr>
+                    <th>
+                        N° cupon
+                    </th>
+                    <th>
+                        Bono
+                    </th>
+                    <th>
+                        Bono Index.
+                    </th>
+                    <th>
+                        Interés
+                    </th>
+                    <th>
+                        Cuota
+                    </th>
+                    <th>
+                        Amortización
+                    </th>
+                    <th>
+                        Prima
+                    </th>
+                    <th>
+                        Escudo
+                    </th>
+                    <th>
+                        Flujo Emisor
+                    </th>
+                    <th>
+                        Flujo Emisor Escudo
+                    </th>
+                    <th>
+                        Flujo Bonista
+                    </th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of dataSource">
+                    <td>
+                        {{item.ncupon}}
+                    </td>
+                    <td>
+                        {{item.bono}}
+                    </td>
+                    <td>
+                        {{item.bonoInd}}
+                    </td>
+                    <td>
+                        {{item.interes}}
+                    </td>
+                    <td>
+                        {{item.cuota}}
+                    </td>
+                    <td>
+                        {{item.amort}}
+                    </td>
+                    <td>
+                        {{item.prima}}
+                    </td>
+                    <td>
+                        {{item.escudo}}
+                    </td>
+                    <td>
+                        {{item.flujoE}}
+                    </td>
+                    <td>
+                        {{item.flujoEcE}}
+                    </td>
+                    <td>
+                        {{item.flujoB}}
+                    </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

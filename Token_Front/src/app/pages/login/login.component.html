@@ -3,7 +3,7 @@
     <div class="example-form">
         <table class="example-full-width" cellspacing="0">
             <tr>
-                <td  colspan="2"><mat-form-field class="example-full-width">
+                <td colspan="2"><mat-form-field style="width: 100%;" class="example-full-width">
                 <mat-label>usuario</mat-label>
                 <input matInput placeholder="Ex. malvodio" value="" [(ngModel)]="username" required>
                 </mat-form-field></td>
@@ -11,7 +11,10 @@
             <tr>
                 <td colspan="2"><mat-form-field class="example-full-width">
                 <mat-label>paswoord</mat-label>
-                <input matInput placeholder="*******" value="" [(ngModel)]="password" required>
+                <input matInput placeholder="*******" [type]="hide ? 'password' : 'text'" value="" [(ngModel)]="password" required>                
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
                 </mat-form-field></td>
             </tr>
             <tr>

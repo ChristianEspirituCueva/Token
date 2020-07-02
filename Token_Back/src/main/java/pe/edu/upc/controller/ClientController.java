@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -60,10 +59,10 @@ public class ClientController {
     public ResponseEntity<Client> registrar(@Valid @RequestBody String cliente){
         JSONObject js= new JSONObject(cliente);
         UserApp userNew = new UserApp(
-            js.getString("username"),
-            js.getString("password"),
             js.getString("name"),
-            js.getString("lastName"),
+            js.getString("lastName"),           
+            js.getString("username"),            
+            js.getString("password"), 
             js.getLong("phone")
         );
         userNew = userService.registrar(userNew);

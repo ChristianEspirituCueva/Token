@@ -8,7 +8,7 @@ import {HttpClient} from '@angular/common/http'
   providedIn: 'root'
 })
 export class BondService {
-  url: string = `${HOST}/admin`
+  url: string = `/api/bono`
 
   constructor(private http: HttpClient) { }
 
