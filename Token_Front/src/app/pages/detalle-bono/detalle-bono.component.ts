@@ -32,10 +32,10 @@ export class DetalleBonoComponent implements OnInit {
       this.dataSource=data;
       this.vNominal = data[0].bond.vNominal;
       this.method = data[0].bond.method;
-      this.tceaEscudo =data[0].bond.tceaEscudo*-1*100;
-      this.tcea = data[0].bond.tcea*-1*100;
-      this.treaBonista = data[0].bond.treaBonista*-1*100;
-      this.vna = data[0].bond.vna*-1;
+      this.tceaEscudo =data[0].bond.tceaEscudo*100;
+      this.tcea = data[0].bond.tcea*100;
+      this.treaBonista = data[0].bond.treaBonista*100;
+      this.vna = data[0].bond.vna;
       this.typeMoney = data[0].bond.typeMoney;
       this.cprice =data[0].bond.cprice;
     });

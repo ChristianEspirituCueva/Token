@@ -86,7 +86,7 @@ public class BondController {
             //fecliqu,            
             js.getBoolean("estado"),
             js.getString("typeMoney")
-            );
+            );      
         bonoNew = bondService.registrar(bonoNew);
         bonoNew = cuponservice.generateCupons(bonoNew);
         bondService.results(bonoNew.getId(),bonoNew.getTcea(),bonoNew.getTceaEscudo(),bonoNew.getTreaBonista(),bonoNew.getCPrice(),bonoNew.getVna());
